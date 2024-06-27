@@ -16,20 +16,19 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { createThread } from "@/lib/actions/createThread.actions";
 import { ThreadValidation } from "@/lib/validation/thread";
+import { createThread } from "@/lib/actions/createThread.actions";
 import { useState } from "react";
 
 // import { ThreadValidation } from "@/lib/validations/thread";
-// import { createThread } from "@/lib/actions/thread.actions";
-
+// import { createThread } from "@/lib/actions/thread.actions"
 
 interface Props {
   userId: string;
 }
 
 function PostThread({ userId }: Props) {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false)
   const router = useRouter();
   const pathname = usePathname();
 
@@ -44,16 +43,22 @@ function PostThread({ userId }: Props) {
   });
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
-    setIsLoading(true)
-    await createThread({
-      text: values.thread,
-      author:userId,
-      communityId: organization ? organization.id : null,
-      path: pathname,
-    });
-
-    router.push("/");
-    setIsLoading(false)
+    try {
+      setLoading(true)
+      await createThread({
+        text: values.thread,
+        author: userId,
+        communityId: organization ? organization.id : null,
+        path: pathname,
+      });
+  
+      router.push("/");
+      setLoading(false)
+    } catch (error:any) {
+      throw new Error(`error to post thread : ${error.message}`)
+    }finally{
+      setLoading(false)
+    }
   };
 
   return (
@@ -79,15 +84,15 @@ function PostThread({ userId }: Props) {
         />
 
         <Button type='submit' className='bg-primary-500' defaultChecked={isLoading}>
-          {isLoading ? (
+           {isLoading ? (
             <>
-              <p>Loading ...</p>
+              <span>Loading ...</span>
             </>
-          ) : (
+           ) : (
             <>
-              <span>Post thread</span>
+              <span>post thread</span>
             </>
-          )}
+           )}
         </Button>
       </form>
     </Form>

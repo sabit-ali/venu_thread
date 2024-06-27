@@ -1,25 +1,18 @@
-
-import { redirect } from "next/navigation";
-import AccountProfile from "@/components/forms/AccountProfile";
 import { currentUser } from "@clerk/nextjs/server";
 import { fetchUser } from "@/lib/actions/user.actions";
+import AccountProfile from "@/components/forms/AccountProfile";
+import { redirect } from "next/navigation";
 
 async function Page() {
   const user = await currentUser();
-  if (!user){
-    return (
-      <div className=" flex flex-col justify-center items-center ">
-        <h1 className=" text-heading1-semibold text-light-1">Please Sign-In befor thread ...</h1>
-      </div>
-    )
-  }; // to avoid typescript warnings
+  if (!user) return null; // to avoid typescript warnings
 
   const userInfo = await fetchUser(user.id);
   if (userInfo?.onboarded) redirect("/");
 
   const userData = {
     id: user.id,
-    objectId: userInfo?._id,
+    objectId: JSON.stringify(userInfo?._id),
     username: userInfo ? userInfo?.username : user.username,
     name: userInfo ? userInfo?.name : user.firstName ?? "",
     bio: userInfo ? userInfo?.bio : "",
