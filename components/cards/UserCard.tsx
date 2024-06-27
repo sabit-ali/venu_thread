@@ -24,14 +24,15 @@ export default function UserCard({
   return (
     <article className=' user-card'>
         <div className=' user-card_avatar'>
-           <div className=' relative h-20 w-20'>
+         
            <Image
             src={imgUrl}
             alt = "Profile img"
-            fill
+            height={20}
+            width={20}
             className=' rounded-full object-cover'
             />
-           </div>
+           
             <div className=' flex-1 text-ellipsis'>
                 <h2 className=' text-light-1 text-base-semibold'> {name} </h2>
                 <h2 className=' text-gray-1 text-small-medium'>@{name} </h2>

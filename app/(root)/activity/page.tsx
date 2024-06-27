@@ -29,7 +29,7 @@ async function page() {
                   fill
                   src={activity.author.image}
                   alt='profile picture'
-                  className=' object-cover rounded-full'
+                  className=' rounded-full object-cover'
                 />
                 </div>
                 <p className=' text-light-1 !text-base-regular '>

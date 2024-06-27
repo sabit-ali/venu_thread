@@ -37,13 +37,14 @@ export default async function page({ params }: { params: { id: string } }) {
               <TabsTrigger key={tab.label} value={tab.value}
                 className="tab"
               >
+                <div className=" h-20 w-20 relative">
                 <Image
                   src={tab.icon}
                   alt={tab.label}
-                  height={24}
-                  width={24}
-                  className=" object-contain"
+                  fill
+                  className="object-cover rounded-full"
                 />
+                </div>
                 <p className=" max-sm:hidden">{tab.label}</p>
 
                 {tab.label === 'Threads' && (
