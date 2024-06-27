@@ -21,8 +21,11 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
+
+
+import { updateUser } from "@/lib/actions/user.actions";
 import { UserValidation } from "@/lib/validation/user";
-import {  updateUser } from "@/lib/actions/user.actions";
+
 interface Props {
   user: {
     id: string;
@@ -36,6 +39,7 @@ interface Props {
 }
 
 const AccountProfile = ({ user, btnTitle }: Props) => {
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter();
   const pathname = usePathname();
   const { startUpload } = useUploadThing("media");
@@ -53,6 +57,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof UserValidation>) => {
+    setIsLoading(true)
     const blob = values.profile_photo;
 
     const hasImageChanged = isBase64Image(blob);
@@ -62,6 +67,8 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       if (imgRes && imgRes[0].url) {
         values.profile_photo = imgRes[0].url;
       }
+
+      setIsLoading(false)
     }
 
     await updateUser({
@@ -114,14 +121,15 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           name='profile_photo'
           render={({ field }) => (
             <FormItem className='flex items-center gap-4'>
-              <FormLabel className='account-form_image-label relative h-20 w-20'>
+              <FormLabel className='account-form_image-label'>
+                <div className=" relative h-20 w-20">
                 {field.value ? (
                   <Image
                     src={field.value}
                     alt='profile_icon'
                     fill
                     priority
-                    className='rounded-full object-contain'
+                    className='rounded-full object-cover'
                   />
                 ) : (
                   <Image
@@ -129,9 +137,10 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                     alt='profile_icon'
                     width={24}
                     height={24}
-                    className='object-contain'
+                    className='object-cover rounded-full'
                   />
                 )}
+                </div>
               </FormLabel>
               <FormControl className='flex-1 text-base-semibold text-gray-200'>
                 <Input
@@ -206,8 +215,16 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           )}
         />
 
-        <Button type='submit' className='bg-primary-500'>
-          {btnTitle}
+        <Button type='submit' className='bg-primary-500' defaultChecked={isLoading}>
+          {isLoading ? (
+            <>
+              <p>Loading ...</p>
+            </>
+          ) : (
+            <>
+              {btnTitle}
+            </>
+          )}
         </Button>
       </form>
     </Form>
