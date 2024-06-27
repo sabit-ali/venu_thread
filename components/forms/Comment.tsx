@@ -58,7 +58,7 @@ const Comment = (
                     render={({ field }) => (
                         <FormItem className='flex w-full items-center gap-3'>
                             <FormLabel className='text-base-semibold text-light-2'>
-                                <div className=' h-20 w-20 relative'>
+                                <div className=' h-11 w-11 relative'>
                                 <Image
                                     src={currentUserImage}
                                     alt='Profile image'
