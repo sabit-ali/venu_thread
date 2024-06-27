@@ -7,7 +7,13 @@ import React from 'react'
 
 export default async function page() {
   const user = await currentUser()
-  if(!user) return null
+  if(!user) return (
+    <>
+      <div className=' flex flex-col justify-between items-center '>
+          <h1 className=' text-light-2'>User not Sign-in</h1>
+      </div>
+    </>
+  )
 
   const userInfo = await fetchUser(user.id)
 

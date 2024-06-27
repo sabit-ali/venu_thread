@@ -16,9 +16,9 @@ const communitySchema = new mongoose.Schema({
   },
   image: String,
   bio: String,
-  createdby : {
-    type : mongoose.Schema.Types.ObjectId,
-    ref:'User'
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   threads: [
     {
@@ -26,14 +26,15 @@ const communitySchema = new mongoose.Schema({
       ref: "Thread",
     },
   ],
-  members :{
-    type :mongoose.Schema.Types.ObjectId,
-    ref:'User'
-  }
-  
- 
+  members: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
-const Community = mongoose.models.Community || mongoose.model("Community", communitySchema);
+const Community =
+  mongoose.models.Community || mongoose.model("Community", communitySchema);
 
 export default Community;

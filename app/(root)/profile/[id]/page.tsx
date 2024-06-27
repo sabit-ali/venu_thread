@@ -57,7 +57,7 @@ export default async function page({ params }: { params: { id: string } }) {
           {profileTabs.map((tab)=>(
             <TabsContent  key={`content$-${tab.label}`} value={tab.value} className=" w-full text-light-1">
               <ThreadsTab 
-              currentUser ={user.id}
+              currentUserId ={user.id}
               accountId = {userInfo.id}
               accountType = "User"
               />

@@ -1,16 +1,11 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-const isProtectedRoute = createRouteMatcher([
-  '/onboarding(.*)',
-  '/forum(.*)',
-]);
+const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)','/api/webhook/clerk(.*)']);
 
-export default clerkMiddleware((auth, req) => {
-  if (!auth().userId && isProtectedRoute(req)) {
 
-    // Add custom logic to run before redirecting
-
-    return auth().redirectToSignIn();
+export default clerkMiddleware((auth, request) => {
+  if(!isPublicRoute(request)) {
+    auth().protect();
   }
 });
 

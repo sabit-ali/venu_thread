@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { createThread } from "@/lib/actions/createThread.actions";
 import { ThreadValidation } from "@/lib/validation/thread";
+import { useState } from "react";
 
 // import { ThreadValidation } from "@/lib/validations/thread";
 // import { createThread } from "@/lib/actions/thread.actions";
@@ -28,6 +29,7 @@ interface Props {
 }
 
 function PostThread({ userId }: Props) {
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter();
   const pathname = usePathname();
 
@@ -42,6 +44,7 @@ function PostThread({ userId }: Props) {
   });
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+    setIsLoading(true)
     await createThread({
       text: values.thread,
       author:userId,
@@ -50,6 +53,7 @@ function PostThread({ userId }: Props) {
     });
 
     router.push("/");
+    setIsLoading(false)
   };
 
   return (
@@ -74,8 +78,16 @@ function PostThread({ userId }: Props) {
           )}
         />
 
-        <Button type='submit' className='bg-primary-500'>
-          Post Thread
+        <Button type='submit' className='bg-primary-500' defaultChecked={isLoading}>
+          {isLoading ? (
+            <>
+              <p>Loading ...</p>
+            </>
+          ) : (
+            <>
+              <span>Post thread</span>
+            </>
+          )}
         </Button>
       </form>
     </Form>

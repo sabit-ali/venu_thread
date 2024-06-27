@@ -9,6 +9,7 @@ const connection:connectionObject = {}
 
 export const ConnectToDB = async () => {
     mongoose.set("strictQuery", true)
+    mongoose.set('strictPopulate', false);
 
     if(connection.isConnection){
         console.log(`mongoDb already connected to server !`)
