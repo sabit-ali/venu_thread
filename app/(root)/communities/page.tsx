@@ -19,7 +19,7 @@ export default async function page() {
 
   const userInfo = await fetchUser(user.id)
 
-  if(!userInfo.onboarded) redirect('/onboarding')
+  if(!userInfo?.onboarded) redirect('/onboarding')
 
     // fetch communityis
     const result = await fetchCommunities({

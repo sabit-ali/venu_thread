@@ -1,8 +1,12 @@
+
 import Image from "next/image";
 import Link from "next/link";
-
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
+import { setLikes } from "@/lib/actions/postlike.actions";
+import { Button } from "../ui/button";
+
+
 
 interface Props {
   id: string;
@@ -28,7 +32,7 @@ interface Props {
   isComment?: boolean;
 }
 
-function ThreadCard({
+async function ThreadCard({
   id,
   currentUserId,
   parentId,
@@ -39,6 +43,7 @@ function ThreadCard({
   comments,
   isComment,
 }: Props) {
+
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${
@@ -71,13 +76,17 @@ function ThreadCard({
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
+               
+                
                 <Image
                   src='/assets/heart-gray.svg'
                   alt='heart'
                   width={24}
                   height={24}
                   className='cursor-pointer object-contain'
-                />
+                  />
+                
+              
                 <Link href={`/thread/${id}`}>
                   <Image
                     src='/assets/reply.svg'

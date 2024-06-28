@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 async function page() {
   const user = await currentUser()
-  if(!user) return redirect('/onboarding')
+  if(!user) return null
   const userInfo = await fetchUser(user.id)
 
   if(!userInfo?.onboarded)  redirect('/onboarding')
@@ -27,6 +27,7 @@ async function page() {
                 <div className=' relative h-14 w-14 '>
                 <Image
                   fill
+                  
                   src={activity.author.image}
                   alt='profile picture'
                   className=' rounded-full object-cover'

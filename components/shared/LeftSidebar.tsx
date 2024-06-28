@@ -3,13 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { SignOutButton, SignedIn, useAuth } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, SignedIn, SignedOut, UserButton, useAuth, } from "@clerk/nextjs";
 
 import { sidebarLinks } from "@/constants";
 
 const LeftSidebar = () => {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   const { userId } = useAuth();
 
@@ -41,10 +41,9 @@ const LeftSidebar = () => {
           );
         })}
       </div>
-
       <div className='mt-10 px-6'>
         <SignedIn>
-          <SignOutButton  redirectUrl="/sign-in">
+          <SignOutButton redirectUrl="/sign-in">
             <div className='flex cursor-pointer gap-4 p-4'>
               <Image
                 src='/assets/logout.svg'

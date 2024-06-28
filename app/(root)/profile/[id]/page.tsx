@@ -11,10 +11,13 @@ import {
 import { profileTabs } from "@/constants"
 import Image from "next/image"
 import ThreadsTab from "@/components/shared/ThreadsTab"
+
+
+
 export default async function page({ params }: { params: { id: string } }) {
 
   const user = await currentUser();
-  if (!user) return redirect("/onboarding");
+  if (!user) return null
 
   const userInfo = await fetchUser(params.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
