@@ -18,7 +18,7 @@ export default async function page() {
   )
 
   const userInfo = await fetchUser(user.id)
-
+  //todo setLikes
   if(!userInfo?.onboarded) redirect('/onboarding')
 
     // fetch communityis

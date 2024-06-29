@@ -6,6 +6,7 @@ import ThreadCard from '@/components/cards/ThreadCard'
 import { fetchThreadById } from '@/lib/actions/createThread.actions'
 import Comment from '@/components/forms/Comment'
 
+
 export default  async function page({params}:{params : {id:string}}) {
   if(!params.id) return null
 

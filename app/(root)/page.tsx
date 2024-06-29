@@ -4,10 +4,15 @@ import Image from "next/image";
 import { currentUser } from "@clerk/nextjs/server";
 import ThreadCard from "@/components/cards/ThreadCard";
 import { fetchPosts } from "@/lib/actions/createThread.actions";
+import { setLikes } from "@/lib/actions/postlike.actions";
+import { fetchUser } from "@/lib/actions/user.actions";
 
 export default async function Home() {
 const user = await currentUser()
+if(!user) return null
+
   const result = await fetchPosts(1, 30)
+
   return (
   <>
     <section className=" mt-9 flex flex-col gap-10"> 
