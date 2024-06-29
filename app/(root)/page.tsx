@@ -1,11 +1,8 @@
 
-import { UserButton } from "@clerk/nextjs";
-import Image from "next/image";
 import { currentUser } from "@clerk/nextjs/server";
 import ThreadCard from "@/components/cards/ThreadCard";
 import { fetchPosts } from "@/lib/actions/createThread.actions";
-import { setLikes } from "@/lib/actions/postlike.actions";
-import { fetchUser } from "@/lib/actions/user.actions";
+
 
 export default async function Home() {
 const user = await currentUser()
